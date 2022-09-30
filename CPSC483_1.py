@@ -2,7 +2,7 @@ import pandas as p
 import numpy as np
 import logging as log
 
-log.basicConfig(format='%(asctime)s %(message)s',datefmt='%Y-%m-%d %H:%M:%S', level=log.INFO)
+log.basicConfig(format='%(asctime)s %(message)s',datefmt=None, level=log.INFO)
 
 all_data = p.read_csv('Data\Data1.csv')
 all_data['constant'] = 1
