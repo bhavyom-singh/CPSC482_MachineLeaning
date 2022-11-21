@@ -2,12 +2,12 @@ import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
 from sklearn.metrics import confusion_matrix, roc_curve, auc
 import matplotlib.pyplot as plt
 
 #loading data
-all_data = pd.read_csv('Assignment3/Data/emails.csv')
+all_data = pd.read_csv("Assignment3/Data/emails.csv")
 
 #splitting data into testing and training
 test_size = 0.25
@@ -18,7 +18,7 @@ v = CountVectorizer()
 X_train_count = v.fit_transform(X_train.values)
 
 #creating model
-model = KNeighborsClassifier(n_neighbors=3)
+model = SVC(probability=True)
 
 #training model
 model.fit(X_train_count, Y_train)
@@ -27,7 +27,7 @@ X_test_count = v.transform(X_test)
 
 #accuracy
 score = model.score(X_test_count, Y_test)
-print("KNN score : {}".format(score))
+print("SVM score : {}".format(score))
 
 #confusion matix
 Y_pred = model.predict(X_test_count)
@@ -66,6 +66,7 @@ error_s_H = 1 - score
 confidence_plus_s = error_s_H + 1.96 * (np.sqrt(error_s_H * (1 - error_s_H) / (len(all_data)* test_size)))
 confidence_minus_s = error_s_H - 1.96 * (np.sqrt(error_s_H * (1 - error_s_H) / (len(all_data)*test_size))) 
 print("Confidence Interval of Error using score from {:.2f}% to {:.2f}%".format((confidence_plus_s * 100), confidence_minus_s * 100))
+
 
 #ploting the ROC Curve
 plt.plot(fpr, tpr, label = 'ROC Curve')
